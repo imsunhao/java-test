@@ -6,7 +6,14 @@ import com.zhanlin.user.repository.UserRepository;
 import com.zhanlin.utils.base.BaseResponse;
 import com.zhanlin.utils.base.ResponseUtils;
 import com.zhanlin.utils.jwt.JwtTokenUtils;
+import com.zhanlin.utils.query.JpaPageQueryParam;
+import com.zhanlin.utils.query.JpaPageableRequest;
+import com.zhanlin.utils.query.JpaSpecificationBuilder;
+import com.zhanlin.utils.query.PageQueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,6 +73,20 @@ public class UserController {
     try {
       Optional<UserEntity> user = userRepository.findById(Long.valueOf(id));
       return ResponseUtils.success(user);
+    } catch (Exception e) {
+      return ResponseUtils.failure(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+  }
+
+  @PostMapping("/list")
+  public ResponseEntity<BaseResponse> findById(@RequestBody JpaPageQueryParam param) {
+    try {
+      Specification<UserEntity> spec = new JpaSpecificationBuilder<>(param.getWhere());
+      PageRequest pageRequest = JpaPageableRequest.generatorPageRequest(param);
+
+      Page<UserEntity> page = userRepository.findAll(spec, pageRequest);
+      PageQueryResult<UserEntity> result = new PageQueryResult<>(page.getContent(), page.getTotalElements());
+      return ResponseUtils.success(result);
     } catch (Exception e) {
       return ResponseUtils.failure(HttpStatus.BAD_REQUEST, e.getMessage());
     }
