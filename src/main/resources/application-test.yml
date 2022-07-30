@@ -1,0 +1,23 @@
+server:
+  port: 8801
+
+spring:
+  datasource:
+    name: mysql
+    url: jdbc:mysql://localhost:3306/database_dev?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
+    username: develop
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: MySQL
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+logging:
+  pattern:
+    console: "[%d] [%-5level]: %msg%n"
+  file: ./logs/spring-boot-jpa-test.log
+  level:
+    root: INFO
