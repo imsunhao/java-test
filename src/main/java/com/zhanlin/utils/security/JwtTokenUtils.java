@@ -3,15 +3,20 @@ package com.zhanlin.utils.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.function.Function;
 
 @Component
+@Configuration
 public class JwtTokenUtils {
-  private final long expire = 28800;
-  private final String secret = "abcdefghabcdefghabcdefghabcdefgh";
+  @Value("${jwt.property.expire}")
+  private Long expire;
+  @Value("${jwt.property.secret}")
+  private String secret;
 
   public String generateToken(String username) {
     Date nowDate = new Date();

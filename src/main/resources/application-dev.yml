@@ -17,6 +17,20 @@ spring:
     hibernate:
       ddl-auto: update
 
+jwt:
+  property:
+    expire: 28800
+    secret: abcdefghabcdefghabcdefghabcdefgh
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  pool:
+    max-Total: 1000
+    max-idle: 1000
+    min-idle: 8
+    max-wait: 10000
+
 logging:
   pattern:
     console: "[%d] [%-5level]: %msg%n"
