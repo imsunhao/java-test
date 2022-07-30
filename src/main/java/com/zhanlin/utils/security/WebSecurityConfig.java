@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -24,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
   @Autowired
-  JwtTokenFilter jwtTokenFilter;
+  JwtAuthenticationFilter JWTAuthenticationFilter;
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -41,7 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
         .accessDeniedHandler(jwtAccessDeniedHandler)
         .and()
-        .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        .addFilterBefore(JWTAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
 
   @Bean

@@ -1,4 +1,4 @@
-package com.zhanlin.utils.security;
+package com.zhanlin.utils.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

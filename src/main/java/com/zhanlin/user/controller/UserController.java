@@ -5,7 +5,7 @@ import com.zhanlin.user.pojo.UserLoginPojo;
 import com.zhanlin.user.repository.UserRepository;
 import com.zhanlin.utils.base.BaseResponse;
 import com.zhanlin.utils.base.ResponseUtils;
-import com.zhanlin.utils.security.JwtTokenUtils;
+import com.zhanlin.utils.jwt.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -62,9 +62,9 @@ public class UserController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<BaseResponse> findById(@RequestParam Long id) {
+  public ResponseEntity<BaseResponse> findById(@PathVariable String id) {
     try {
-      Optional<UserEntity> user = userRepository.findById(id);
+      Optional<UserEntity> user = userRepository.findById(Long.valueOf(id));
       return ResponseUtils.success(user);
     } catch (Exception e) {
       return ResponseUtils.failure(HttpStatus.BAD_REQUEST, e.getMessage());
