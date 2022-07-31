@@ -1,3 +1,16 @@
+### 如何开发
+
+#### 使用 docker-compose 进行快速搭建开发环境
+
+- 安装docker, 安装docker-compose
+- 启动命令 docker-compose up -d
+
+#### 如何使用 IDEA 进行开发
+
+- 设置中文，选择插件里面找一下
+- 导入项目后，右侧有个maven按钮，点击重新加载
+- 完成后就可以启动了，中间上面有个绿色的play按钮。
+
 ### 注册
 
 http://127.0.0.1:8801/api/user/register

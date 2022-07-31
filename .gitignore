@@ -1,3 +1,6 @@
 .idea/
+
+develop/mysql/datadir
+
 *.iml
 target/

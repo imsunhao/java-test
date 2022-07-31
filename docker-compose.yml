@@ -1,0 +1,31 @@
+version: "3"
+services:
+  db:
+    # mkdir -p ./develop/mysql/{mydir,datadir,conf,source}
+    restart: always
+    image: mysql:5.7
+    container_name: mysql-label
+    volumes:
+      - ./develop/mysql/mydir:/mydir
+      - ./develop/mysql/datadir:/var/lib/mysql
+      - ./develop/mysql/conf/my.cnf:/etc/my.cnf
+      - ./develop/mysql/initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      - "MYSQL_ROOT_PASSWORD=password"
+      - "MYSQL_DATABASE=database_development"
+      - "MYSQL_USER=develop"
+      - "MYSQL_PASSWORD=password"
+      - "TZ=Asia/Shanghai"
+    ports:
+      - "3306:3306"
+  redis:
+    # mkdir -p .develop/redis/{datadir,conf,logs}
+    image: redis:7
+    container_name: redis-label
+    # volumes:
+    #   - ./develop/redis/datadir:/data
+    #   - ./develop/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
+    #   - ./develop/redis/logs:/logs
+    # command: redis-server --requirepass yourpass
+    ports:
+      - "6379:6379"
